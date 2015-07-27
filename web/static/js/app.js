@@ -1,12 +1,14 @@
 import { Socket } from './phoenix';
 
-let socket = new Socket("/ws")
-socket.connect()
-let chan = socket.chan("rooms:lobby", {})
-chan.join().receive("ok", chan => {
-  console.log("Welcome to Phoenix Chat!")
-})
-
-const app = {};
+const app = {
+  initChat() {
+    let socket = new Socket("/ws");
+    socket.connect();
+    let chan = socket.chan("rooms:lobby", {});
+    chan.join().receive("ok", chan => {
+      console.log("Welcome to Phoenix Chat!")
+    });
+  },
+};
 
 export default app;

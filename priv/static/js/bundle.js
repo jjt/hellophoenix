@@ -52,14 +52,16 @@
 
 	var _phoenix = __webpack_require__(1);
 
-	var socket = new _phoenix.Socket("/ws");
-	socket.connect();
-	var chan = socket.chan("rooms:lobby", {});
-	chan.join().receive("ok", function (chan) {
-	  console.log("Welcome to Phoenix Chat!");
-	});
-
-	var app = {};
+	var app = {
+	  initChat: function initChat() {
+	    var socket = new _phoenix.Socket("/ws");
+	    socket.connect();
+	    var chan = socket.chan("rooms:lobby", {});
+	    chan.join().receive("ok", function (chan) {
+	      console.log("Welcome to Phoenix Chat!");
+	    });
+	  }
+	};
 
 	exports["default"] = app;
 	module.exports = exports["default"];
