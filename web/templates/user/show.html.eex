@@ -17,6 +17,11 @@
     <%= @user.bio %>
   </li>
 
+  <h3><%= Enum.count @user.videos %> Videos</h3>
+  <%= for video <- @user.videos do %>
+    <li><a href="<%= video_path(@conn, :show, video.id) %>"><%= video.name %></a></li>
+  <% end %>
+
 </ul>
 
 <%= link "Back", to: user_path(@conn, :index) %>

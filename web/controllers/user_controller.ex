@@ -2,6 +2,7 @@ defmodule HelloPhoenix.UserController do
   use HelloPhoenix.Web, :controller
 
   alias HelloPhoenix.User
+  alias HelloPhoenix.Video
 
   plug :scrub_params, "user" when action in [:create, :update]
 
@@ -30,7 +31,7 @@ defmodule HelloPhoenix.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = Repo.get!(User, id)
+    user = User |> Repo.get(id) |> Repo.preload [:videos]
     render(conn, "show.html", user: user)
   end
 

@@ -14,7 +14,7 @@
 
   <li>
     <strong>User:</strong>
-    <%= @video.user.name %>
+    <a href="<%= user_path(@conn, :show, @video.user.id) %>"><%= @video.user.name %></a>
   </li>
 
 </ul>
