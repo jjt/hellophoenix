@@ -12,6 +12,11 @@
     <%= @video.desc %>
   </li>
 
+  <li>
+    <strong>User:</strong>
+    <%= @video.user.name %>
+  </li>
+
 </ul>
 
 <%= link "Back", to: video_path(@conn, :index) %>

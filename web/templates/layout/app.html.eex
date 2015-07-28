@@ -14,10 +14,9 @@
   <body>
     <div class="container" role="main">
       <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
-        </ul>
-        <span class="logo"></span>
+        <a href="<%= page_path(@conn, :index) %>">Home</a>
+        <a href="<%= user_path(@conn, :index) %>">Users</a>
+        <a href="<%= video_path(@conn, :index) %>">Videos</a>
       </div>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>

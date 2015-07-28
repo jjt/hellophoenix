@@ -2,23 +2,19 @@ defmodule HelloPhoenix.VideoController do
   use HelloPhoenix.Web, :controller
 
   alias HelloPhoenix.Video
+  alias HelloPhoenix.User
 
   plug :scrub_params, "video" when action in [:create, :update]
-  # plug :find_user
-
-  defp find_user(conn, _) do
-    user = Repo.get(HelloPhoenix.User, conn.params["user_id"])
-    assign(conn, :user, user)
-  end
 
   def index(conn, _params) do
-    videos = Repo.all(Video)
+    videos = Repo.all(Video) |> Repo.preload [:user]
     render(conn, "index.html", videos: videos)
   end
 
   def new(conn, _params) do
     changeset = Video.changeset(%Video{})
-    render(conn, "new.html", changeset: changeset)
+    users = Repo.all(User) |> Enum.map(fn x -> {x.name, x.id} end)
+    render(conn, "new.html", changeset: changeset, users: users)
   end
 
   def create(conn, %{"video" => video_params}) do
@@ -36,14 +32,15 @@ defmodule HelloPhoenix.VideoController do
   end
 
   def show(conn, %{"id" => id}) do
-    video = Repo.get!(Video, id)
+    video = Repo.get(Video, id) |> Repo.preload [:user]
     render(conn, "show.html", video: video)
   end
 
   def edit(conn, %{"id" => id}) do
     video = Repo.get!(Video, id)
     changeset = Video.changeset(video)
-    render(conn, "edit.html", video: video, changeset: changeset)
+    users = Repo.all(User) |> Enum.map(fn x -> {x.name, x.id} end)
+    render(conn, "edit.html", video: video, changeset: changeset, users: users)
   end
 
   def update(conn, %{"id" => id, "video" => video_params}) do
